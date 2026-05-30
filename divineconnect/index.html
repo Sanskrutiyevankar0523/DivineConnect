@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DivineConnect — AI Muhurat Finder × Pandit Booking</title>
+    <meta name="description" content="Find your auspicious moment with AI-powered Muhurat calculation and book verified pandits for ceremonies across India.">
+    <meta property="og:title" content="DivineConnect — AI Muhurat Finder × Pandit Booking">
+    <meta property="og:description" content="Personalized astrological timing meets on-demand pandit services.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- ============================================ -->
+    <!-- NAVIGATION -->
+    <!-- ============================================ -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo" id="nav-logo" onclick="navigateTo('home')">
+                <span class="logo-icon">🙏</span>
+                <span class="logo-text">DivineConnect</span>
+            </a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#" class="nav-link active" data-page="home" onclick="navigateTo('home')">Home</a></li>
+                <li><a href="#" class="nav-link" data-page="muhurat" onclick="navigateTo('muhurat')">Find Muhurat</a></li>
+                <li><a href="#" class="nav-link" data-page="pandits" onclick="navigateTo('pandits')">Browse Pandits</a></li>
+                <li id="nav-account-item" style="display:none"><a href="#" class="nav-link" id="nav-account-link" onclick="goToMyAccount()">My Account</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="btn btn-ghost nav-join" id="nav-join-btn" onclick="openModal('modal-join-pandit')">Join as Pandit</button>
+                <button class="btn btn-primary nav-login" id="nav-login-btn" onclick="openModal('modal-login')">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    Login
+                </button>
+            </div>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ============================================ -->
+    <!-- PAGE: HOME -->
+    <!-- ============================================ -->
+    <main class="page page-home active" id="page-home">
+        <!-- Hero Section -->
+        <section class="hero" id="hero-section">
+            <div class="hero-mandala"></div>
+            <div class="hero-particles" id="hero-particles"></div>
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    AI-Powered Spiritual Platform
+                </div>
+                <h1 class="hero-title">
+                    Find Your<br>
+                    <span class="hero-title-accent">Auspicious Moment</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Personalized Muhurat calculation powered by Vedic astrology and AI, 
+                    paired with verified pandits for every ceremony.
+                </p>
+                <div class="hero-ctas">
+                    <button class="btn btn-primary btn-lg" id="hero-muhurat-btn" onclick="navigateTo('muhurat')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        Find Muhurat
+                    </button>
+                    <button class="btn btn-secondary btn-lg" id="hero-browse-btn" onclick="navigateTo('pandits')">
+                        Browse Pandits
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+                <div class="hero-trust">
+                    <div class="trust-item">
+                        <span class="trust-number" data-target="2847">0</span>
+                        <span class="trust-label">Pujas Completed</span>
+                    </div>
+                    <div class="trust-divider"></div>
+                    <div class="trust-item">
+                        <span class="trust-number" data-target="512">0</span>
+                        <span class="trust-label">Verified Pandits</span>
+                    </div>
+                    <div class="trust-divider"></div>
+                    <div class="trust-item">
+                        <span class="trust-number trust-rating" data-target="4.9">0</span>
+                        <span class="trust-label">Average Rating</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-scroll-indicator">
+                <span>Scroll to explore</span>
+                <div class="scroll-arrow"></div>
+            </div>
+        </section>
+
+        <!-- Ceremony Categories -->
+        <section class="section ceremonies-section" id="ceremonies-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-eyebrow">Ceremonies</span>
+                    <h2 class="section-title">Every Ritual, <span class="text-gold">Beautifully Served</span></h2>
+                    <p class="section-subtitle">From life milestones to daily worship — find the perfect pandit for every occasion</p>
+                </div>
+                <div class="ceremony-grid" id="ceremony-grid">
+                    <div class="ceremony-card" data-ceremony="griha-pravesh">
+                        <div class="ceremony-icon">🏠</div>
+                        <h3 class="ceremony-name">Griha Pravesh</h3>
+                        <p class="ceremony-desc">New home blessing ceremony</p>
+                    </div>
+                    <div class="ceremony-card" data-ceremony="vivah">
+                        <div class="ceremony-icon">💒</div>
+                        <h3 class="ceremony-name">Vivah</h3>
+                        <p class="ceremony-desc">Sacred wedding rituals</p>
+                    </div>
+                    <div class="ceremony-card" data-ceremony="satyanarayan">
+                        <div class="ceremony-icon">🙏</div>
+                        <h3 class="ceremony-name">Satyanarayan</h3>
+                        <p class="ceremony-desc">Lord Vishnu worship puja</p>
+                    </div>
+                    <div class="ceremony-card" data-ceremony="mundan">
+                        <div class="ceremony-icon">👶</div>
+                        <h3 class="ceremony-name">Mundan</h3>
+                        <p class="ceremony-desc">First head-shaving ceremony</p>
+                    </div>
+                    <div class="ceremony-card" data-ceremony="naamkaran">
+                        <div class="ceremony-icon">✨</div>
+                        <h3 class="ceremony-name">Naamkaran</h3>
+                        <p class="ceremony-desc">Baby naming ceremony</p>
+                    </div>
+                    <div class="ceremony-card" data-ceremony="ganesh-puja">
+                        <div class="ceremony-icon">🐘</div>
+                        <h3 class="ceremony-name">Ganesh Puja</h3>
+                        <p class="ceremony-desc">Remover of obstacles</p>
+                    </div>
+                    <div class="ceremony-card" data-ceremony="laxmi-puja">
+                        <div class="ceremony-icon">🪷</div>
+                        <h3 class="ceremony-name">Laxmi Puja</h3>
+                        <p class="ceremony-desc">Prosperity and wealth puja</p>
+                    </div>
+                    <div class="ceremony-card" data-ceremony="shradh">
+                        <div class="ceremony-icon">🕯️</div>
+                        <h3 class="ceremony-name">Shradh</h3>
+                        <p class="ceremony-desc">Ancestor prayer ceremony</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="section how-it-works-section" id="how-it-works">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-eyebrow">How It Works</span>
+                    <h2 class="section-title">Three Steps to <span class="text-gold">Divine Timing</span></h2>
+                </div>
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-number">01</div>
+                        <div class="step-icon-wrap">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                        </div>
+                        <h3 class="step-title">Find Your Muhurat</h3>
+                        <p class="step-desc">Select your ceremony, date, and location. Our AI combines Panchang data with Jyotish rules to find the most auspicious time windows.</p>
+                    </div>
+                    <div class="step-connector">
+                        <svg width="40" height="2" viewBox="0 0 40 2"><line x1="0" y1="1" x2="40" y2="1" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/></svg>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">02</div>
+                        <div class="step-icon-wrap">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </div>
+                        <h3 class="step-title">Choose Your Pandit</h3>
+                        <p class="step-desc">Browse verified pandits available during your muhurat. Watch video intros, read reviews, and compare pricing transparently.</p>
+                    </div>
+                    <div class="step-connector">
+                        <svg width="40" height="2" viewBox="0 0 40 2"><line x1="0" y1="1" x2="40" y2="1" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/></svg>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">03</div>
+                        <div class="step-icon-wrap">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        </div>
+                        <h3 class="step-title">Book & Celebrate</h3>
+                        <p class="step-desc">Confirm your booking, pay securely, and receive instant confirmation. Your pandit arrives at the perfect auspicious moment.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Pandits -->
+        <section class="section featured-section" id="featured-pandits">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-eyebrow">Top Rated</span>
+                    <h2 class="section-title">Featured <span class="text-gold">Pandits</span></h2>
+                    <p class="section-subtitle">Hand-picked for their exceptional service, knowledge, and devotion</p>
+                </div>
+                <div class="pandit-cards-grid" id="featured-pandit-grid">
+                    <!-- Cards injected by JS -->
+                </div>
+                <div class="section-cta">
+                    <button class="btn btn-secondary" onclick="navigateTo('pandits')">
+                        View All Pandits
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Feature Highlight -->
+        <section class="section ai-section" id="ai-feature">
+            <div class="container">
+                <div class="ai-grid">
+                    <div class="ai-content">
+                        <span class="section-eyebrow">Our Core Technology</span>
+                        <h2 class="section-title">AI Muhurat Finder — <span class="text-gold">Your Jyotish Expert</span></h2>
+                        <p class="ai-description">
+                            Our proprietary engine combines the ancient science of Vedic astrology with modern AI to deliver 
+                            personalized, accurate muhurat calculations in seconds — not hours.
+                        </p>
+                        <div class="ai-features-list">
+                            <div class="ai-feature-item">
+                                <div class="ai-feature-icon">🌙</div>
+                                <div>
+                                    <strong>Real-Time Panchang</strong>
+                                    <p>Tithi, Nakshatra, Yoga, Karana computed for your exact location and time</p>
+                                </div>
+                            </div>
+                            <div class="ai-feature-item">
+                                <div class="ai-feature-icon">⭐</div>
+                                <div>
+                                    <strong>Personalized Results</strong>
+                                    <p>Factors in your Rashi, Nakshatra, and regional tradition for tailored recommendations</p>
+                                </div>
+                            </div>
+                            <div class="ai-feature-item">
+                                <div class="ai-feature-icon">🤖</div>
+                                <div>
+                                    <strong>GPT-4o Explanations</strong>
+                                    <p>Complex Jyotish reasoning translated into clear, warm, devotionally respectful language</p>
+                                </div>
+                            </div>
+                            <div class="ai-feature-item">
+                                <div class="ai-feature-icon">📊</div>
+                                <div>
+                                    <strong>Confidence Scoring</strong>
+                                    <p>Each muhurat window ranked with a confidence score so you can choose wisely</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-lg" onclick="navigateTo('muhurat')">
+                            Try Muhurat Finder
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                    <div class="ai-visual">
+                        <div class="ai-demo-card">
+                            <div class="ai-demo-header">
+                                <span class="ai-demo-badge">AI Analysis</span>
+                                <span class="ai-demo-ceremony">Griha Pravesh</span>
+                            </div>
+                            <div class="ai-demo-result">
+                                <div class="ai-demo-window ai-demo-best">
+                                    <div class="ai-demo-window-header">
+                                        <span class="ai-demo-recommend">✨ Recommended</span>
+                                        <span class="ai-demo-score">94%</span>
+                                    </div>
+                                    <div class="ai-demo-time">9:15 AM — 10:45 AM</div>
+                                    <div class="ai-demo-tags">
+                                        <span class="tag tag-positive">Abhijit Muhurat</span>
+                                        <span class="tag tag-positive">Shubh Tithi</span>
+                                        <span class="tag tag-neutral">Pushya Nakshatra</span>
+                                    </div>
+                                </div>
+                                <div class="ai-demo-window">
+                                    <div class="ai-demo-window-header">
+                                        <span class="ai-demo-label">Good Window</span>
+                                        <span class="ai-demo-score">78%</span>
+                                    </div>
+                                    <div class="ai-demo-time">2:30 PM — 4:00 PM</div>
+                                    <div class="ai-demo-tags">
+                                        <span class="tag tag-positive">Amrit Kaal</span>
+                                        <span class="tag tag-neutral">Dwitiya Tithi</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ai-demo-explanation">
+                                <div class="ai-demo-explain-header">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                                    Why this is auspicious
+                                </div>
+                                <p>The morning window falls within the rare Abhijit Muhurat, considered universally auspicious. Combined with Pushya Nakshatra — one of the most favorable stars for new beginnings — this creates an exceptionally powerful time for your Griha Pravesh.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="section testimonials-section" id="testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-eyebrow">Testimonials</span>
+                    <h2 class="section-title">Loved by <span class="text-gold">Devotees</span></h2>
+                </div>
+                <div class="testimonial-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">"The AI Muhurat finder was incredibly accurate. Our pandit even complimented the timing we chose. The entire experience felt sacred and seamless."</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">P</div>
+                            <div>
+                                <strong>Priya Sharma</strong>
+                                <span>Griha Pravesh • Bangalore</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">"Being in the US, I could never coordinate pujas back home. DivineConnect made it effortless — my parents were so happy with the pandit."</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">R</div>
+                            <div>
+                                <strong>Rahul Verma</strong>
+                                <span>Satyanarayan Puja • San Jose</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">"Finally, a platform that respects tradition while embracing technology. The pandit was verified, punctual, and truly knowledgeable."</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">M</div>
+                            <div>
+                                <strong>Meera Iyer</strong>
+                                <span>Naamkaran • Chennai</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="section cta-section" id="cta-section">
+            <div class="container">
+                <div class="cta-card">
+                    <div class="cta-mandala-bg"></div>
+                    <h2 class="cta-title">Ready to Find Your <span class="text-gold">Auspicious Moment</span>?</h2>
+                    <p class="cta-subtitle">Join thousands of families who trust DivineConnect for their sacred ceremonies</p>
+                    <div class="cta-buttons">
+                        <button class="btn btn-primary btn-lg" onclick="navigateTo('muhurat')">Find Muhurat Now</button>
+                        <button class="btn btn-secondary btn-lg" onclick="navigateTo('pandits')">Browse Pandits</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ============================================ -->
+    <!-- PAGE: MUHURAT RESULTS -->
+    <!-- ============================================ -->
+    <main class="page page-muhurat" id="page-muhurat">
+        <!-- Muhurat Input Wizard -->
+        <section class="muhurat-input-section" id="muhurat-input-section">
+            <div class="muhurat-input-hero">
+                <div class="container">
+                    <span class="section-eyebrow">AI Muhurat Finder</span>
+                    <h1 class="page-title" style="color: var(--color-text-inverse)">Find Your Auspicious Moment</h1>
+                    <p class="page-subtitle" style="color: rgba(255,248,240,0.7)">Select your ceremony, date, and preferences — our AI finds the perfect timing</p>
+                </div>
+            </div>
+            <div class="container muhurat-wizard-container">
+                <div class="wizard-progress">
+                    <div class="wizard-step active" data-step="1"><span class="wizard-step-num">1</span><span class="wizard-step-label">Ceremony</span></div>
+                    <div class="wizard-step-line"></div>
+                    <div class="wizard-step" data-step="2"><span class="wizard-step-num">2</span><span class="wizard-step-label">Date & Location</span></div>
+                    <div class="wizard-step-line"></div>
+                    <div class="wizard-step" data-step="3"><span class="wizard-step-num">3</span><span class="wizard-step-label">Personalize</span></div>
+                </div>
+                <!-- Step 1: Ceremony Selection -->
+                <div class="wizard-panel active" id="wizard-step-1">
+                    <h3 class="wizard-panel-title">What ceremony are you planning?</h3>
+                    <div class="wizard-ceremony-grid">
+                        <div class="wizard-ceremony-card" data-ceremony="griha-pravesh"><div class="ceremony-icon">🏠</div><h4>Griha Pravesh</h4><p>New home blessing</p></div>
+                        <div class="wizard-ceremony-card" data-ceremony="vivah"><div class="ceremony-icon">💒</div><h4>Vivah</h4><p>Wedding rituals</p></div>
+                        <div class="wizard-ceremony-card" data-ceremony="satyanarayan"><div class="ceremony-icon">🙏</div><h4>Satyanarayan</h4><p>Vishnu worship</p></div>
+                        <div class="wizard-ceremony-card" data-ceremony="mundan"><div class="ceremony-icon">👶</div><h4>Mundan</h4><p>First head-shaving</p></div>
+                        <div class="wizard-ceremony-card" data-ceremony="naamkaran"><div class="ceremony-icon">✨</div><h4>Naamkaran</h4><p>Baby naming</p></div>
+                        <div class="wizard-ceremony-card" data-ceremony="ganesh-puja"><div class="ceremony-icon">🐘</div><h4>Ganesh Puja</h4><p>Obstacle remover</p></div>
+                        <div class="wizard-ceremony-card" data-ceremony="laxmi-puja"><div class="ceremony-icon">🪷</div><h4>Laxmi Puja</h4><p>Prosperity puja</p></div>
+                        <div class="wizard-ceremony-card" data-ceremony="shradh"><div class="ceremony-icon">🕯️</div><h4>Shradh</h4><p>Ancestor prayers</p></div>
+                    </div>
+                </div>
+                <!-- Step 2: Date & Location -->
+                <div class="wizard-panel" id="wizard-step-2">
+                    <h3 class="wizard-panel-title">When and where?</h3>
+                    <div class="wizard-form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Preferred Date</label>
+                            <input type="date" class="form-input" id="wizard-date" value="2026-06-15">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">City / Location</label>
+                            <input type="text" class="form-input" id="wizard-location" placeholder="e.g. Bangalore, Delhi, Mumbai" value="Bangalore" list="city-suggestions">
+                            <datalist id="city-suggestions">
+                                <option value="Bangalore"><option value="Delhi"><option value="Mumbai"><option value="Chennai"><option value="Hyderabad"><option value="Pune"><option value="Kolkata"><option value="Varanasi"><option value="Jaipur"><option value="Lucknow">
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="wizard-nav">
+                        <button class="btn btn-ghost" onclick="wizardBack()">← Back</button>
+                        <button class="btn btn-primary" onclick="wizardNext()">Next →</button>
+                    </div>
+                </div>
+                <!-- Step 3: Personalization -->
+                <div class="wizard-panel" id="wizard-step-3">
+                    <h3 class="wizard-panel-title">Personalize your results <span style="color: var(--color-text-muted); font-size: 0.875rem; font-weight: 400;">(optional)</span></h3>
+                    <div class="wizard-form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Your Rashi (Zodiac)</label>
+                            <select class="form-select" id="wizard-rashi">
+                                <option value="">Skip — I don't know</option>
+                                <option value="mesh">Mesh (Aries)</option><option value="vrishabh">Vrishabh (Taurus)</option><option value="mithun">Mithun (Gemini)</option><option value="kark">Kark (Cancer)</option><option value="singh">Singh (Leo)</option><option value="kanya">Kanya (Virgo)</option><option value="tula">Tula (Libra)</option><option value="vrishchik">Vrishchik (Scorpio)</option><option value="dhanu">Dhanu (Sagittarius)</option><option value="makar">Makar (Capricorn)</option><option value="kumbh">Kumbh (Aquarius)</option><option value="meen">Meen (Pisces)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Your Nakshatra (Birth Star)</label>
+                            <select class="form-select" id="wizard-nakshatra">
+                                <option value="">Skip — I don't know</option>
+                                <option>Ashwini</option><option>Bharani</option><option>Krittika</option><option>Rohini</option><option>Mrigashira</option><option>Ardra</option><option>Punarvasu</option><option>Pushya</option><option>Ashlesha</option><option>Magha</option><option>Purva Phalguni</option><option>Uttara Phalguni</option><option>Hasta</option><option>Chitra</option><option>Swati</option><option>Vishakha</option><option>Anuradha</option><option>Jyeshtha</option><option>Mula</option><option>Purva Ashadha</option><option>Uttara Ashadha</option><option>Shravana</option><option>Dhanishta</option><option>Shatabhisha</option><option>Purva Bhadrapada</option><option>Uttara Bhadrapada</option><option>Revati</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Tradition</label>
+                            <div class="radio-group">
+                                <label class="radio-label"><input type="radio" name="tradition" value="north" checked> North Indian</label>
+                                <label class="radio-label"><input type="radio" name="tradition" value="south"> South Indian</label>
+                                <label class="radio-label"><input type="radio" name="tradition" value="bengali"> Bengali</label>
+                                <label class="radio-label"><input type="radio" name="tradition" value="pan"> Pan-Indian</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wizard-nav">
+                        <button class="btn btn-ghost" onclick="wizardBack()">← Back</button>
+                        <button class="btn btn-primary btn-lg" id="find-muhurat-submit" onclick="submitMuhuratSearch()">
+                            🔮 Find Auspicious Time
+                        </button>
+                    </div>
+                </div>
+                <!-- Loading State -->
+                <div class="wizard-panel" id="wizard-loading" style="text-align: center; padding: 80px 0;">
+                    <div class="muhurat-loader"></div>
+                    <h3 class="wizard-panel-title" style="margin-top: 24px;">Consulting the Stars...</h3>
+                    <p style="color: var(--color-text-muted);">Computing Panchang data and analyzing auspicious windows</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Muhurat Results Section (hidden initially) -->
+        <div id="muhurat-results-section" style="display:none">
+            <button class="btn btn-ghost" onclick="showMuhuratInput()" style="margin-bottom: 16px; margin-left: 24px; margin-top: 16px;">← New Search</button>
+            <section class="muhurat-hero">
+                <div class="container">
+                    <div class="muhurat-hero-content">
+                        <span class="section-eyebrow">AI Muhurat Finder</span>
+                        <h1 class="page-title">Muhurat Results</h1>
+                        <p class="page-subtitle">Auspicious timings for <strong>Griha Pravesh</strong> on <strong>June 15, 2026</strong> in <strong>Bangalore</strong></p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="container muhurat-container">
+                <!-- Panchang Summary -->
+                <div class="panchang-card" id="panchang-card">
+                    <h3 class="panchang-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        Panchang for June 15, 2026
+                    </h3>
+                    <div class="panchang-grid">
+                        <div class="panchang-item">
+                            <span class="panchang-label">Tithi</span>
+                            <span class="panchang-value">Dwitiya (Shukla)</span>
+                        </div>
+                        <div class="panchang-item">
+                            <span class="panchang-label">Nakshatra</span>
+                            <span class="panchang-value">Pushya</span>
+                        </div>
+                        <div class="panchang-item">
+                            <span class="panchang-label">Yoga</span>
+                            <span class="panchang-value">Siddhi</span>
+                        </div>
+                        <div class="panchang-item">
+                            <span class="panchang-label">Karana</span>
+                            <span class="panchang-value">Balava</span>
+                        </div>
+                    </div>
+                    <div class="panchang-timeline">
+                        <h4 class="panchang-timeline-title">Inauspicious Periods to Avoid</h4>
+                        <div class="timeline-bar">
+                            <div class="timeline-block avoid" style="left: 25%; width: 8%;" data-label="Rahu Kaal" data-time="10:30 - 12:00">
+                                <span class="timeline-tooltip">Rahu Kaal: 10:30 - 12:00</span>
+                            </div>
+                            <div class="timeline-block avoid" style="left: 56%; width: 6%;" data-label="Gulika Kaal" data-time="1:30 - 3:00">
+                                <span class="timeline-tooltip">Gulika Kaal: 1:30 - 3:00</span>
+                            </div>
+                        </div>
+                        <div class="timeline-labels">
+                            <span>6 AM</span><span>9 AM</span><span>12 PM</span><span>3 PM</span><span>6 PM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Muhurat Windows -->
+                <div class="muhurat-results" id="muhurat-results">
+                    <h3 class="results-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        Auspicious Windows Found
+                        <span class="results-count">3 windows</span>
+                    </h3>
+
+                    <!-- Best Window -->
+                    <div class="muhurat-window muhurat-best" id="muhurat-window-1">
+                        <div class="muhurat-window-badge">✨ Best Recommendation</div>
+                        <div class="muhurat-window-header">
+                            <div class="muhurat-window-time">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                9:15 AM — 10:45 AM
+                            </div>
+                            <div class="muhurat-score">
+                                <div class="score-circle">
+                                    <svg viewBox="0 0 36 36" class="score-svg">
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(200,169,81,0.2)" stroke-width="3"/>
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#C8A951" stroke-width="3" stroke-dasharray="94, 100" stroke-linecap="round"/>
+                                    </svg>
+                                    <span class="score-value">94%</span>
+                                </div>
+                                <span class="score-label">Confidence</span>
+                            </div>
+                        </div>
+                        <div class="muhurat-tags">
+                            <span class="tag tag-excellent">Abhijit Muhurat</span>
+                            <span class="tag tag-positive">Shubh Tithi</span>
+                            <span class="tag tag-positive">Pushya Nakshatra</span>
+                            <span class="tag tag-positive">No Rahu Kaal</span>
+                        </div>
+                        <div class="muhurat-explanation">
+                            <div class="explanation-toggle" onclick="toggleExplanation(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                                <span>Why this is auspicious — AI Explanation</span>
+                                <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                            </div>
+                            <div class="explanation-content">
+                                <p>This morning window is exceptionally auspicious for your Griha Pravesh. Here's why:</p>
+                                <ul>
+                                    <li><strong>Abhijit Muhurat</strong> — This is considered universally auspicious across all Jyotish traditions. It occurs at midday and is ruled by Lord Vishnu, the preserver, making it ideal for new beginnings in a home.</li>
+                                    <li><strong>Pushya Nakshatra</strong> — One of the three most favorable Nakshatras for Griha Pravesh. Pushya means "nourishment" and is associated with prosperity, growth, and protection of the home.</li>
+                                    <li><strong>Shukla Dwitiya</strong> — The second day of the waxing moon phase symbolizes growth and new endeavors. Your home's energy will grow alongside the moon.</li>
+                                    <li><strong>No Rahu Kaal</strong> — This window is completely clear of Rahu Kaal (10:30 AM - 12:00 PM), ensuring no malefic planetary influence during your ceremony.</li>
+                                </ul>
+                                <p class="explanation-footer">🙏 <em>May Lord Ganesha bless your new home with peace and prosperity.</em></p>
+                            </div>
+                        </div>
+                        <div class="muhurat-actions">
+                            <button class="btn btn-primary" onclick="navigateTo('pandits')">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                Book Pandit for This Window
+                            </button>
+                            <button class="btn btn-ghost" onclick="saveMuhurat(1)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                                Save
+                            </button>
+                            <button class="btn btn-ghost" onclick="shareMuhurat()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                                Share
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Second Window -->
+                    <div class="muhurat-window" id="muhurat-window-2">
+                        <div class="muhurat-window-header">
+                            <div class="muhurat-window-time">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                2:30 PM — 4:00 PM
+                            </div>
+                            <div class="muhurat-score">
+                                <div class="score-circle">
+                                    <svg viewBox="0 0 36 36" class="score-svg">
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(200,169,81,0.2)" stroke-width="3"/>
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#C8A951" stroke-width="3" stroke-dasharray="78, 100" stroke-linecap="round"/>
+                                    </svg>
+                                    <span class="score-value">78%</span>
+                                </div>
+                                <span class="score-label">Confidence</span>
+                            </div>
+                        </div>
+                        <div class="muhurat-tags">
+                            <span class="tag tag-positive">Amrit Kaal</span>
+                            <span class="tag tag-positive">Dwitiya Tithi</span>
+                            <span class="tag tag-neutral">Post Gulika Kaal</span>
+                        </div>
+                        <div class="muhurat-explanation">
+                            <div class="explanation-toggle" onclick="toggleExplanation(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                                <span>Why this is auspicious — AI Explanation</span>
+                                <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                            </div>
+                            <div class="explanation-content">
+                                <p>The afternoon window benefits from Amrit Kaal — literally "the nectar time" — a period when the day's energy is highly positive. While not as strong as the morning's Abhijit Muhurat, this is still an excellent choice, especially if morning timing is impractical.</p>
+                            </div>
+                        </div>
+                        <div class="muhurat-actions">
+                            <button class="btn btn-primary" onclick="navigateTo('pandits')">Book Pandit for This Window</button>
+                            <button class="btn btn-ghost" onclick="saveMuhurat(2)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                                Save
+                            </button>
+                            <button class="btn btn-ghost" onclick="shareMuhurat()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                                Share
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Third Window -->
+                    <div class="muhurat-window" id="muhurat-window-3">
+                        <div class="muhurat-window-header">
+                            <div class="muhurat-window-time">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                6:00 AM — 7:15 AM
+                            </div>
+                            <div class="muhurat-score">
+                                <div class="score-circle">
+                                    <svg viewBox="0 0 36 36" class="score-svg">
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(200,169,81,0.2)" stroke-width="3"/>
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#C8A951" stroke-width="3" stroke-dasharray="65, 100" stroke-linecap="round"/>
+                                    </svg>
+                                    <span class="score-value">65%</span>
+                                </div>
+                                <span class="score-label">Confidence</span>
+                            </div>
+                        </div>
+                        <div class="muhurat-tags">
+                            <span class="tag tag-positive">Brahma Muhurat</span>
+                            <span class="tag tag-neutral">Early Morning</span>
+                            <span class="tag tag-caution">Limited Duration</span>
+                        </div>
+                        <div class="muhurat-explanation">
+                            <div class="explanation-toggle" onclick="toggleExplanation(this)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                                <span>Why this is auspicious — AI Explanation</span>
+                                <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                            </div>
+                            <div class="explanation-content">
+                                <p>Brahma Muhurat — the "creator's hour" — is traditionally the most spiritually charged time of day. However, the limited 75-minute window may feel rushed for a full Griha Pravesh ceremony (typically 2+ hours). Best suited for the initial entry and Ganesh Puja, with the remainder of the ceremony continuing after.</p>
+                            </div>
+                        </div>
+                        <div class="muhurat-actions">
+                            <button class="btn btn-primary" onclick="navigateTo('pandits')">Book Pandit for This Window</button>
+                            <button class="btn btn-ghost" onclick="saveMuhurat(3)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                                Save
+                            </button>
+                            <button class="btn btn-ghost" onclick="shareMuhurat()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                                Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ============================================ -->
+    <!-- PAGE: PANDIT LISTING -->
+    <!-- ============================================ -->
+    <main class="page page-pandits" id="page-pandits">
+        <section class="listing-hero">
+            <div class="container">
+                <span class="section-eyebrow">Verified Pandits</span>
+                <h1 class="page-title">Browse Pandits</h1>
+                <p class="page-subtitle">512 verified pandits across India — find the perfect match for your ceremony</p>
+            </div>
+        </section>
+
+        <div class="container listing-container">
+            <!-- Filters -->
+            <div class="filter-bar" id="filter-bar">
+                <div class="filter-group">
+                    <select class="filter-select" id="filter-ceremony">
+                        <option value="">All Ceremonies</option>
+                        <option value="griha-pravesh" selected>Griha Pravesh</option>
+                        <option value="vivah">Vivah</option>
+                        <option value="satyanarayan">Satyanarayan Puja</option>
+                        <option value="mundan">Mundan</option>
+                        <option value="naamkaran">Naamkaran</option>
+                    </select>
+                    <select class="filter-select" id="filter-city">
+                        <option value="">All Cities</option>
+                        <option value="bangalore" selected>Bangalore</option>
+                        <option value="delhi">Delhi</option>
+                        <option value="mumbai">Mumbai</option>
+                        <option value="varanasi">Varanasi</option>
+                    </select>
+                    <select class="filter-select" id="filter-language">
+                        <option value="">All Languages</option>
+                        <option value="hindi">Hindi</option>
+                        <option value="sanskrit">Sanskrit</option>
+                        <option value="kannada">Kannada</option>
+                        <option value="tamil">Tamil</option>
+                    </select>
+                    <select class="filter-select" id="filter-price">
+                        <option value="">Any Price</option>
+                        <option value="0-2000">Under ₹2,000</option>
+                        <option value="2000-5000">₹2,000 - ₹5,000</option>
+                        <option value="5000-10000">₹5,000 - ₹10,000</option>
+                        <option value="10000+">₹10,000+</option>
+                    </select>
+                </div>
+                <div class="filter-sort">
+                    <span class="sort-label">Sort by:</span>
+                    <select class="filter-select" id="sort-by">
+                        <option value="relevance">Relevance</option>
+                        <option value="rating">Rating</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Results count -->
+            <div class="listing-results-info" id="listing-results-info">
+                <span id="pandit-count">Showing 6 pandits</span>
+            </div>
+
+            <!-- Pandit Cards -->
+            <div class="pandit-listing-grid" id="pandit-listing-grid">
+                <!-- Injected by JS -->
+            </div>
+        </div>
+    </main>
+
+    <!-- ============================================ -->
+    <!-- PAGE: PANDIT PROFILE -->
+    <!-- ============================================ -->
+    <main class="page page-pandit-profile" id="page-pandit-profile">
+        <!-- Profile Header -->
+        <section class="profile-hero" id="profile-hero">
+            <div class="profile-cover"></div>
+            <div class="container profile-header-content">
+                <div class="profile-avatar-section">
+                    <div class="profile-avatar" id="profile-avatar">
+                        <img src="" alt="Pandit Rajesh Sharma" id="profile-avatar-img">
+                        <span class="profile-verified-badge" title="Verified Pandit">✓</span>
+                    </div>
+                    <div class="profile-info">
+                        <h1 class="profile-name">Pandit Rajesh Sharma</h1>
+                        <p class="profile-location">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            Bangalore, Karnataka
+                        </p>
+                        <div class="profile-rating">
+                            <span class="rating-stars">★★★★★</span>
+                            <span class="rating-score">4.9</span>
+                            <span class="rating-count">(127 reviews)</span>
+                        </div>
+                        <div class="profile-badges">
+                            <span class="profile-badge badge-verified">✅ Verified</span>
+                            <span class="profile-badge badge-featured">⭐ Featured</span>
+                            <span class="profile-badge badge-experience">20 yrs experience</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-quick-actions">
+                    <button class="btn btn-primary btn-lg" id="book-pandit-btn" onclick="openModal('modal-booking')">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        Book This Pandit
+                    </button>
+                    <button class="btn btn-ghost" onclick="shareProfile()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                        Share
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <div class="container profile-container">
+            <div class="profile-grid">
+                <!-- Left Column -->
+                <div class="profile-main">
+                    <!-- Video Intro -->
+                    <div class="profile-section" id="profile-video-section">
+                        <h3 class="profile-section-title">Video Introduction</h3>
+                        <div class="video-player">
+                            <div class="video-placeholder" onclick="toggleVideo(this)">
+                                <div class="video-play-btn">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                </div>
+                                <span class="video-duration">2:34</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- About -->
+                    <div class="profile-section" id="profile-about">
+                        <h3 class="profile-section-title">About</h3>
+                        <div class="profile-bio">
+                            <p>Namaste 🙏 I am Pandit Rajesh Sharma, a third-generation Vedic priest from Varanasi, now serving families across Bangalore. With over 20 years of experience performing sacred ceremonies, I bring the authenticity of Kashi traditions combined with the warmth that every family deserves.</p>
+                            <p>I specialize in Griha Pravesh, Vivah (wedding), Satyanarayan Puja, and all lifecycle ceremonies. I conduct pujas in both Sanskrit and Hindi, with explanations in English so that every family member can participate meaningfully.</p>
+                            <p>My approach: every ceremony should feel personal, not transactional. I spend time understanding your family's traditions and customize the rituals accordingly.</p>
+                        </div>
+                        <div class="profile-details-grid">
+                            <div class="profile-detail">
+                                <span class="detail-label">Languages</span>
+                                <span class="detail-value">Hindi, Sanskrit, English, Kannada</span>
+                            </div>
+                            <div class="profile-detail">
+                                <span class="detail-label">Traditions</span>
+                                <span class="detail-value">North Indian, Pan-Indian</span>
+                            </div>
+                            <div class="profile-detail">
+                                <span class="detail-label">Education</span>
+                                <span class="detail-value">Sampurnanand Sanskrit University, Varanasi</span>
+                            </div>
+                            <div class="profile-detail">
+                                <span class="detail-label">Service Area</span>
+                                <span class="detail-value">Bangalore (within 25 km) + Online</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ceremonies Offered -->
+                    <div class="profile-section" id="profile-ceremonies">
+                        <h3 class="profile-section-title">Ceremonies Offered</h3>
+                        <div class="ceremonies-table">
+                            <div class="ceremony-row ceremony-row-header">
+                                <span>Ceremony</span>
+                                <span>Duration</span>
+                                <span>Price</span>
+                                <span></span>
+                            </div>
+                            <div class="ceremony-row">
+                                <span class="ceremony-row-name">🏠 Griha Pravesh</span>
+                                <span>2-3 hrs</span>
+                                <span class="ceremony-row-price">₹3,500</span>
+                                <button class="btn btn-primary btn-sm" onclick="openBookingWithCeremony('griha-pravesh')">Book</button>
+                            </div>
+                            <div class="ceremony-row">
+                                <span class="ceremony-row-name">💒 Vivah (Wedding)</span>
+                                <span>4-5 hrs</span>
+                                <span class="ceremony-row-price">₹11,000</span>
+                                <button class="btn btn-primary btn-sm" onclick="openBookingWithCeremony('vivah')">Book</button>
+                            </div>
+                            <div class="ceremony-row">
+                                <span class="ceremony-row-name">🙏 Satyanarayan Puja</span>
+                                <span>2 hrs</span>
+                                <span class="ceremony-row-price">₹2,500</span>
+                                <button class="btn btn-primary btn-sm" onclick="openBookingWithCeremony('satyanarayan')">Book</button>
+                            </div>
+                            <div class="ceremony-row">
+                                <span class="ceremony-row-name">👶 Mundan</span>
+                                <span>1.5 hrs</span>
+                                <span class="ceremony-row-price">₹2,100</span>
+                                <button class="btn btn-primary btn-sm" onclick="openBookingWithCeremony('mundan')">Book</button>
+                            </div>
+                            <div class="ceremony-row">
+                                <span class="ceremony-row-name">✨ Naamkaran</span>
+                                <span>1 hr</span>
+                                <span class="ceremony-row-price">₹1,800</span>
+                                <button class="btn btn-primary btn-sm" onclick="openBookingWithCeremony('naamkaran')">Book</button>
+                            </div>
+                            <div class="ceremony-row">
+                                <span class="ceremony-row-name">🐘 Ganesh Puja</span>
+                                <span>1.5 hrs</span>
+                                <span class="ceremony-row-price">₹2,000</span>
+                                <button class="btn btn-primary btn-sm" onclick="openBookingWithCeremony('ganesh-puja')">Book</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reviews -->
+                    <div class="profile-section" id="profile-reviews">
+                        <h3 class="profile-section-title">Reviews <span class="review-count-badge">127</span></h3>
+                        <div class="review-summary">
+                            <div class="review-overall">
+                                <span class="review-big-number">4.9</span>
+                                <div class="review-stars-lg">★★★★★</div>
+                                <span class="review-total">127 reviews</span>
+                            </div>
+                            <div class="review-breakdown">
+                                <div class="review-bar-row">
+                                    <span>Punctuality</span>
+                                    <div class="review-bar"><div class="review-bar-fill" style="width: 96%;"></div></div>
+                                    <span>4.8</span>
+                                </div>
+                                <div class="review-bar-row">
+                                    <span>Knowledge</span>
+                                    <div class="review-bar"><div class="review-bar-fill" style="width: 100%;"></div></div>
+                                    <span>5.0</span>
+                                </div>
+                                <div class="review-bar-row">
+                                    <span>Communication</span>
+                                    <div class="review-bar"><div class="review-bar-fill" style="width: 98%;"></div></div>
+                                    <span>4.9</span>
+                                </div>
+                                <div class="review-bar-row">
+                                    <span>Value</span>
+                                    <div class="review-bar"><div class="review-bar-fill" style="width: 94%;"></div></div>
+                                    <span>4.7</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="reviews-list">
+                            <div class="review-card">
+                                <div class="review-header">
+                                    <div class="review-avatar">A</div>
+                                    <div>
+                                        <strong>Ananya Krishnamurthy</strong>
+                                        <div class="review-meta">
+                                            <span class="review-stars-sm">★★★★★</span>
+                                            <span>• Griha Pravesh • 2 weeks ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="review-text">"Pandit Rajesh made our Griha Pravesh so special. He explained every step of the ceremony to our children and even our non-Hindu guests understood and appreciated the rituals. His Sanskrit pronunciation is impeccable and he truly made us feel blessed."</p>
+                            </div>
+                            <div class="review-card">
+                                <div class="review-header">
+                                    <div class="review-avatar">V</div>
+                                    <div>
+                                        <strong>Vikram Mehta</strong>
+                                        <div class="review-meta">
+                                            <span class="review-stars-sm">★★★★★</span>
+                                            <span>• Satyanarayan Puja • 1 month ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="review-text">"We've been doing Satyanarayan Puja at home for years, and Pandit Rajesh is by far the best pandit we've worked with. Extremely punctual, arrived 15 minutes early, and the puja was conducted with great devotion and precision."</p>
+                            </div>
+                            <div class="review-card">
+                                <div class="review-header">
+                                    <div class="review-avatar">S</div>
+                                    <div>
+                                        <strong>Sunita Reddy</strong>
+                                        <div class="review-meta">
+                                            <span class="review-stars-sm">★★★★☆</span>
+                                            <span>• Naamkaran • 2 months ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="review-text">"Beautiful ceremony for our baby's naming. Pandit ji suggested some wonderful names based on the baby's nakshatra. The only reason for 4 stars is that we had to wait a bit for him to arrive, but the ceremony itself was flawless."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar -->
+                <aside class="profile-sidebar">
+                    <!-- Booking Card -->
+                    <div class="sidebar-card booking-card" id="sidebar-booking-card">
+                        <h3 class="sidebar-card-title">Quick Book</h3>
+                        <div class="booking-form">
+                            <div class="form-group">
+                                <label class="form-label">Ceremony</label>
+                                <select class="form-select" id="booking-ceremony">
+                                    <option value="griha-pravesh">Griha Pravesh — ₹3,500</option>
+                                    <option value="satyanarayan">Satyanarayan — ₹2,500</option>
+                                    <option value="vivah">Vivah — ₹11,000</option>
+                                    <option value="mundan">Mundan — ₹2,100</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Preferred Date</label>
+                                <input type="date" class="form-input" id="booking-date" value="2026-06-15">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Location</label>
+                                <input type="text" class="form-input" id="booking-location" placeholder="Your city or address" value="Bangalore">
+                            </div>
+                            <button class="btn btn-primary btn-block" id="find-muhurat-btn" onclick="sidebarMuhuratSearch()">
+                                🔮 Find Best Muhurat & Book
+                            </button>
+                            <p class="booking-note">AI will find the best auspicious time for your ceremony</p>
+                        </div>
+                    </div>
+
+                    <!-- Availability Calendar -->
+                    <div class="sidebar-card" id="sidebar-availability">
+                        <h3 class="sidebar-card-title">This Week's Availability</h3>
+                        <div class="availability-grid">
+                            <div class="avail-day avail-open" onclick="selectAvailDay(this, 16)">
+                                <span class="avail-day-name">Mon</span>
+                                <span class="avail-day-date">16</span>
+                                <span class="avail-status">Available</span>
+                            </div>
+                            <div class="avail-day avail-booked" onclick="selectAvailDay(this, 17)">
+                                <span class="avail-day-name">Tue</span>
+                                <span class="avail-day-date">17</span>
+                                <span class="avail-status">Booked</span>
+                            </div>
+                            <div class="avail-day avail-open" onclick="selectAvailDay(this, 18)">
+                                <span class="avail-day-name">Wed</span>
+                                <span class="avail-day-date">18</span>
+                                <span class="avail-status">Available</span>
+                            </div>
+                            <div class="avail-day avail-open" onclick="selectAvailDay(this, 19)">
+                                <span class="avail-day-name">Thu</span>
+                                <span class="avail-day-date">19</span>
+                                <span class="avail-status">Available</span>
+                            </div>
+                            <div class="avail-day avail-booked" onclick="selectAvailDay(this, 20)">
+                                <span class="avail-day-name">Fri</span>
+                                <span class="avail-day-date">20</span>
+                                <span class="avail-status">Booked</span>
+                            </div>
+                            <div class="avail-day avail-open" onclick="selectAvailDay(this, 21)">
+                                <span class="avail-day-name">Sat</span>
+                                <span class="avail-day-date">21</span>
+                                <span class="avail-status">Available</span>
+                            </div>
+                            <div class="avail-day avail-booked" onclick="selectAvailDay(this, 22)">
+                                <span class="avail-day-name">Sun</span>
+                                <span class="avail-day-date">22</span>
+                                <span class="avail-status">Booked</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact -->
+                    <div class="sidebar-card" id="sidebar-contact">
+                        <h3 class="sidebar-card-title">Response Time</h3>
+                        <div class="response-info">
+                            <div class="response-stat">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                <div>
+                                    <strong>Usually responds in 30 minutes</strong>
+                                    <span>98% response rate</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- ============================================ -->
+    <!-- PAGE: USER PROFILE -->
+    <!-- ============================================ -->
+    <main class="page page-user-profile" id="page-user-profile">
+        <section class="dashboard-hero">
+            <div class="container">
+                <div class="dashboard-hero-inner">
+                    <div class="dashboard-avatar">
+                        <div class="dashboard-avatar-circle" id="user-avatar">U</div>
+                    </div>
+                    <div class="dashboard-hero-info">
+                        <h1 class="page-title" style="color: var(--color-text-inverse)" id="user-profile-name">Welcome, User</h1>
+                        <p style="color: rgba(255,248,240,0.7)" id="user-profile-phone">+91 98765 43210</p>
+                    </div>
+                    <button class="btn btn-secondary" style="margin-left: auto; color: var(--color-gold-light); border-color: rgba(200,169,81,0.4);" onclick="logoutUser()">Logout</button>
+                </div>
+            </div>
+        </section>
+        <div class="container" style="padding-top: var(--space-2xl); padding-bottom: var(--space-4xl);">
+            <div class="dashboard-tabs" id="user-dashboard-tabs">
+                <button class="dash-tab active" data-tab="bookings" onclick="switchUserTab('bookings')">📅 My Bookings</button>
+                <button class="dash-tab" data-tab="saved" onclick="switchUserTab('saved')">❤️ Saved Pandits</button>
+                <button class="dash-tab" data-tab="profile" onclick="switchUserTab('profile')">👤 My Profile</button>
+            </div>
+
+            <!-- My Bookings Tab -->
+            <div class="dash-panel active" id="user-tab-bookings">
+                <h3 class="dash-section-title">Upcoming Bookings</h3>
+                <div class="booking-list" id="user-upcoming-bookings">
+                    <div class="booking-card">
+                        <div class="booking-card-status status-confirmed">Confirmed</div>
+                        <div class="booking-card-body">
+                            <div class="booking-card-left">
+                                <h4 class="booking-card-ceremony">🏠 Griha Pravesh</h4>
+                                <p class="booking-card-pandit">with Pandit Rajesh Sharma</p>
+                                <div class="booking-card-meta">📅 June 15, 2026 • ⏰ 9:15 AM – 10:45 AM</div>
+                                <div class="booking-card-meta">📍 Whitefield, Bangalore</div>
+                            </div>
+                            <div class="booking-card-right">
+                                <span class="booking-card-price">₹3,599</span>
+                                <span class="booking-card-id">DC-2026-48291</span>
+                            </div>
+                        </div>
+                        <div class="booking-card-actions">
+                            <button class="btn btn-ghost btn-sm" onclick="showToast('Reschedule request sent', 'success')">Reschedule</button>
+                            <button class="btn btn-ghost btn-sm" style="color: var(--color-error)" onclick="showToast('Booking cancelled. Refund initiated.', 'info')">Cancel</button>
+                            <button class="btn btn-primary btn-sm" onclick="showToast('Calling Pandit ji...', 'info')">📞 Contact Pandit</button>
+                        </div>
+                    </div>
+                    <div class="booking-card">
+                        <div class="booking-card-status status-pending">Pending Confirmation</div>
+                        <div class="booking-card-body">
+                            <div class="booking-card-left">
+                                <h4 class="booking-card-ceremony">🙏 Satyanarayan Puja</h4>
+                                <p class="booking-card-pandit">with Pandit Arun Mishra</p>
+                                <div class="booking-card-meta">📅 July 2, 2026 • ⏰ 10:00 AM – 12:00 PM</div>
+                                <div class="booking-card-meta">📍 Sector 62, Noida</div>
+                            </div>
+                            <div class="booking-card-right">
+                                <span class="booking-card-price">₹2,599</span>
+                                <span class="booking-card-id">DC-2026-48307</span>
+                            </div>
+                        </div>
+                        <div class="booking-card-actions">
+                            <button class="btn btn-ghost btn-sm" onclick="showToast('Reschedule request sent', 'success')">Reschedule</button>
+                            <button class="btn btn-ghost btn-sm" style="color: var(--color-error)" onclick="showToast('Booking cancelled. Refund initiated.', 'info')">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="dash-section-title" style="margin-top: var(--space-2xl);">Past Bookings</h3>
+                <div class="booking-list" id="user-past-bookings">
+                    <div class="booking-card booking-past">
+                        <div class="booking-card-status status-completed">Completed ✓</div>
+                        <div class="booking-card-body">
+                            <div class="booking-card-left">
+                                <h4 class="booking-card-ceremony">💒 Vivah — Wedding Ceremony</h4>
+                                <p class="booking-card-pandit">with Pandit Venkatesh Iyer</p>
+                                <div class="booking-card-meta">📅 March 8, 2026 • 📍 JP Nagar, Bangalore</div>
+                            </div>
+                            <div class="booking-card-right">
+                                <span class="booking-card-price">₹11,099</span>
+                                <div class="booking-rating-stars" onclick="showToast('Thank you for your rating!', 'success')" style="cursor:pointer">⭐⭐⭐⭐⭐</div>
+                            </div>
+                        </div>
+                        <div class="booking-card-actions">
+                            <button class="btn btn-primary btn-sm" onclick="viewPanditProfile(3); showToast('Rebook this pandit anytime!', 'info')">Book Again</button>
+                            <button class="btn btn-ghost btn-sm" onclick="showToast('Receipt downloaded', 'success')">📄 Download Receipt</button>
+                        </div>
+                    </div>
+                    <div class="booking-card booking-past">
+                        <div class="booking-card-status status-completed">Completed ✓</div>
+                        <div class="booking-card-body">
+                            <div class="booking-card-left">
+                                <h4 class="booking-card-ceremony">👶 Mundan Ceremony</h4>
+                                <p class="booking-card-pandit">with Pandit Rajesh Sharma</p>
+                                <div class="booking-card-meta">📅 January 20, 2026 • 📍 Indiranagar, Bangalore</div>
+                            </div>
+                            <div class="booking-card-right">
+                                <span class="booking-card-price">₹2,199</span>
+                                <div class="booking-rating-stars">⭐⭐⭐⭐☆</div>
+                            </div>
+                        </div>
+                        <div class="booking-card-actions">
+                            <button class="btn btn-primary btn-sm" onclick="viewPanditProfile(1)">Book Again</button>
+                            <button class="btn btn-ghost btn-sm" onclick="showToast('Receipt downloaded', 'success')">📄 Download Receipt</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Saved Pandits Tab -->
+            <div class="dash-panel" id="user-tab-saved">
+                <h3 class="dash-section-title">Your Liked Pandits</h3>
+                <p class="dash-section-subtitle" style="color: var(--color-text-muted); margin-bottom: var(--space-xl);">Pandits you've saved for future ceremonies</p>
+                <div class="pandit-cards-grid" id="saved-pandits-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- My Profile Tab -->
+            <div class="dash-panel" id="user-tab-profile">
+                <div class="profile-edit-card">
+                    <h3 class="dash-section-title">Personal Information</h3>
+                    <div class="form-row" style="margin-top: var(--space-lg);">
+                        <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-input" id="edit-user-name" value="User" placeholder="Your full name"></div>
+                        <div class="form-group"><label class="form-label">Phone</label><input type="tel" class="form-input" id="edit-user-phone" value="+91 98765 43210" disabled style="opacity:0.6"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="edit-user-email" placeholder="your@email.com"></div>
+                        <div class="form-group"><label class="form-label">City</label><input type="text" class="form-input" id="edit-user-city" placeholder="Bangalore"></div>
+                    </div>
+                    <div class="form-group"><label class="form-label">Default Address</label><textarea class="form-input form-textarea" id="edit-user-address" rows="2" placeholder="Your home address for ceremonies"></textarea></div>
+                    <div class="form-group"><label class="form-label">Preferred Tradition</label>
+                        <div class="radio-group">
+                            <label class="radio-label"><input type="radio" name="user-tradition" value="north" checked> North Indian</label>
+                            <label class="radio-label"><input type="radio" name="user-tradition" value="south"> South Indian</label>
+                            <label class="radio-label"><input type="radio" name="user-tradition" value="bengali"> Bengali</label>
+                            <label class="radio-label"><input type="radio" name="user-tradition" value="pan"> Pan-Indian</label>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="showToast('Profile updated successfully! ✅', 'success')" style="margin-top: var(--space-md);">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ============================================ -->
+    <!-- PAGE: PANDIT DASHBOARD -->
+    <!-- ============================================ -->
+    <main class="page page-pandit-dashboard" id="page-pandit-dashboard">
+        <section class="dashboard-hero pandit-dashboard-hero">
+            <div class="container">
+                <div class="dashboard-hero-inner">
+                    <div class="dashboard-avatar">
+                        <div class="dashboard-avatar-circle pandit-avatar-circle" id="pandit-dash-avatar" style="background: linear-gradient(135deg, #C8A951, #A68A3E);">RS</div>
+                    </div>
+                    <div class="dashboard-hero-info">
+                        <h1 class="page-title" style="color: var(--color-text-inverse)" id="pandit-dash-name">Pandit Rajesh Sharma</h1>
+                        <p style="color: rgba(255,248,240,0.7)"><span id="pandit-dash-rating">⭐ 4.9</span> • <span id="pandit-dash-bookings-count">127 ceremonies</span> • <span id="pandit-dash-city">Bangalore</span></p>
+                    </div>
+                    <button class="btn btn-secondary" style="margin-left: auto; color: var(--color-gold-light); border-color: rgba(200,169,81,0.4);" onclick="logoutPandit()">Logout</button>
+                </div>
+            </div>
+        </section>
+        <div class="container" style="padding-top: var(--space-2xl); padding-bottom: var(--space-4xl);">
+            <!-- Pandit Stats Bar -->
+            <div class="pandit-stats-bar">
+                <div class="pandit-stat-item"><span class="pandit-stat-num" style="color: var(--color-success)">3</span><span class="pandit-stat-label">Upcoming</span></div>
+                <div class="pandit-stat-item"><span class="pandit-stat-num">127</span><span class="pandit-stat-label">Total</span></div>
+                <div class="pandit-stat-item"><span class="pandit-stat-num" style="color: var(--color-gold)">₹4.2L</span><span class="pandit-stat-label">Earnings</span></div>
+                <div class="pandit-stat-item"><span class="pandit-stat-num">4.9</span><span class="pandit-stat-label">Rating</span></div>
+            </div>
+
+            <div class="dashboard-tabs" id="pandit-dashboard-tabs">
+                <button class="dash-tab active" data-tab="upcoming" onclick="switchPanditTab('upcoming')">📅 Upcoming</button>
+                <button class="dash-tab" data-tab="past" onclick="switchPanditTab('past')">📋 Past Bookings</button>
+                <button class="dash-tab" data-tab="portfolio" onclick="switchPanditTab('portfolio')">📸 My Portfolio</button>
+                <button class="dash-tab" data-tab="settings" onclick="switchPanditTab('settings')">⚙️ Settings</button>
+            </div>
+
+            <!-- Upcoming Bookings Tab -->
+            <div class="dash-panel active" id="pandit-tab-upcoming">
+                <h3 class="dash-section-title">Upcoming Ceremonies</h3>
+                <div class="booking-list">
+                    <div class="booking-card">
+                        <div class="booking-card-status status-confirmed">Confirmed</div>
+                        <div class="booking-card-body">
+                            <div class="booking-card-left">
+                                <h4 class="booking-card-ceremony">🏠 Griha Pravesh</h4>
+                                <p class="booking-card-pandit">Client: Amit & Priya Desai</p>
+                                <div class="booking-card-meta">📅 June 15, 2026 • ⏰ 9:15 AM – 10:45 AM</div>
+                                <div class="booking-card-meta">📍 Whitefield, Bangalore • 📞 +91 98XXX XXXXX</div>
+                            </div>
+                            <div class="booking-card-right">
+                                <span class="booking-card-price">₹3,500</span>
+                                <span class="booking-card-id">DC-2026-48291</span>
+                            </div>
+                        </div>
+                        <div class="booking-card-actions">
+                            <button class="btn btn-primary btn-sm" onclick="showToast('Client notified – you\'re on your way!', 'success')">✅ Accept</button>
+                            <button class="btn btn-ghost btn-sm" onclick="showToast('Calling client...', 'info')">📞 Call Client</button>
+                            <button class="btn btn-ghost btn-sm" onclick="showToast('Directions opening in Maps...', 'info')">🗺️ Get Directions</button>
+                        </div>
+                    </div>
+                    <div class="booking-card">
+                        <div class="booking-card-status status-pending">Pending Your Confirmation</div>
+                        <div class="booking-card-body">
+                            <div class="booking-card-left">
+                                <h4 class="booking-card-ceremony">🙏 Satyanarayan Puja</h4>
+                                <p class="booking-card-pandit">Client: Rahul Mehta</p>
+                                <div class="booking-card-meta">📅 June 22, 2026 • ⏰ 10:00 AM – 12:00 PM</div>
+                                <div class="booking-card-meta">📍 Koramangala, Bangalore</div>
+                            </div>
+                            <div class="booking-card-right">
+                                <span class="booking-card-price">₹2,500</span>
+                                <span class="booking-card-id">DC-2026-48315</span>
+                            </div>
+                        </div>
+                        <div class="booking-card-actions">
+                            <button class="btn btn-primary btn-sm" onclick="this.textContent='Accepted ✓'; this.disabled=true; showToast('Booking accepted!', 'success')">✅ Accept</button>
+                            <button class="btn btn-ghost btn-sm" style="color: var(--color-error)" onclick="showToast('Booking declined. Client will be notified.', 'info')">Decline</button>
+                            <button class="btn btn-ghost btn-sm" onclick="showToast('Calling client...', 'info')">📞 Call</button>
+                        </div>
+                    </div>
+                    <div class="booking-card">
+                        <div class="booking-card-status status-confirmed">Confirmed</div>
+                        <div class="booking-card-body">
+                            <div class="booking-card-left">
+                                <h4 class="booking-card-ceremony">💒 Vivah — Wedding Ceremony</h4>
+                                <p class="booking-card-pandit">Client: Vikram & Sneha Reddy</p>
+                                <div class="booking-card-meta">📅 July 10, 2026 • ⏰ 6:00 AM – 12:00 PM</div>
+                                <div class="booking-card-meta">📍 Palace Grounds, Bangalore</div>
+                            </div>
+                            <div class="booking-card-right">
+                                <span class="booking-card-price">₹11,000</span>
+                                <span class="booking-card-id">DC-2026-48342</span>
+                            </div>
+                        </div>
+                        <div class="booking-card-actions">
+                            <button class="btn btn-ghost btn-sm" onclick="showToast('Calling client...', 'info')">📞 Call Client</button>
+                            <button class="btn btn-ghost btn-sm" onclick="showToast('Special notes: Iyengar tradition, include Ganesh Puja', 'info')">📝 View Notes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Past Bookings Tab -->
+            <div class="dash-panel" id="pandit-tab-past">
+                <h3 class="dash-section-title">Completed Ceremonies</h3>
+                <div class="booking-list">
+                    <div class="booking-card booking-past">
+                        <div class="booking-card-status status-completed">Completed ✓</div>
+                        <div class="booking-card-body">
+                            <div class="booking-card-left">
+                                <h4 class="booking-card-ceremony">👶 Mundan Ceremony</h4>
+                                <p class="booking-card-pandit">Client: Sanjay Gupta Family</p>
+                                <div class="booking-card-meta">📅 May 12, 2026 • 📍 HSR Layout, Bangalore</div>
+                                <div class="booking-card-meta">Client Rating: ⭐⭐⭐⭐⭐ — "Excellent puja, very professional"</div>
+                            </div>
+                            <div class="booking-card-right">
+                                <span class="booking-card-price">₹2,100</span>
+                                <span style="font-size:0.75rem;color:var(--color-success)">Paid ✓</span>
+                            </div>
+                        </div>
+                        <div class="booking-card-actions">
+                            <button class="btn btn-ghost btn-sm" onclick="showToast('Receipt downloaded', 'success')">📄 Receipt</button>
+                            <button class="btn btn-primary btn-sm" onclick="showToast('Upload photos for this ceremony in the Portfolio tab', 'info')">📸 Add Photos</button>
+                        </div>
+                    </div>
+                    <div class="booking-card booking-past">
+                        <div class="booking-card-status status-completed">Completed ✓</div>
+                        <div class="booking-card-body">
+                            <div class="booking-card-left">
+                                <h4 class="booking-card-ceremony">🏠 Griha Pravesh</h4>
+                                <p class="booking-card-pandit">Client: Deepak Sharma Family</p>
+                                <div class="booking-card-meta">📅 April 28, 2026 • 📍 Electronic City, Bangalore</div>
+                                <div class="booking-card-meta">Client Rating: ⭐⭐⭐⭐⭐ — "Everything was perfect"</div>
+                            </div>
+                            <div class="booking-card-right">
+                                <span class="booking-card-price">₹3,500</span>
+                                <span style="font-size:0.75rem;color:var(--color-success)">Paid ✓</span>
+                            </div>
+                        </div>
+                        <div class="booking-card-actions">
+                            <button class="btn btn-ghost btn-sm" onclick="showToast('Receipt downloaded', 'success')">📄 Receipt</button>
+                        </div>
+                    </div>
+                    <div class="booking-card booking-past">
+                        <div class="booking-card-status status-completed">Completed ✓</div>
+                        <div class="booking-card-body">
+                            <div class="booking-card-left">
+                                <h4 class="booking-card-ceremony">🙏 Satyanarayan Puja</h4>
+                                <p class="booking-card-pandit">Client: Arvind Patel Family</p>
+                                <div class="booking-card-meta">📅 March 15, 2026 • 📍 Jayanagar, Bangalore</div>
+                                <div class="booking-card-meta">Client Rating: ⭐⭐⭐⭐☆ — "Good experience overall"</div>
+                            </div>
+                            <div class="booking-card-right">
+                                <span class="booking-card-price">₹2,500</span>
+                                <span style="font-size:0.75rem;color:var(--color-success)">Paid ✓</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="booking-card booking-past">
+                        <div class="booking-card-status status-completed">Completed ✓</div>
+                        <div class="booking-card-body">
+                            <div class="booking-card-left">
+                                <h4 class="booking-card-ceremony">💒 Vivah — Full Wedding</h4>
+                                <p class="booking-card-pandit">Client: Ravi & Kavitha</p>
+                                <div class="booking-card-meta">📅 February 14, 2026 • 📍 Banashankari, Bangalore</div>
+                                <div class="booking-card-meta">Client Rating: ⭐⭐⭐⭐⭐ — "Life-changing ceremony, deeply moving"</div>
+                            </div>
+                            <div class="booking-card-right">
+                                <span class="booking-card-price">₹11,000</span>
+                                <span style="font-size:0.75rem;color:var(--color-success)">Paid ✓</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Tab -->
+            <div class="dash-panel" id="pandit-tab-portfolio">
+                <div class="portfolio-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-xl);">
+                    <div>
+                        <h3 class="dash-section-title" style="margin-bottom: 4px;">My Ceremony Portfolio</h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem;">Showcase your work to families — photos from past ceremonies</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="triggerPortfolioUpload()">📸 Upload Photos</button>
+                </div>
+                <input type="file" id="portfolio-file-input" accept="image/*" multiple style="display:none" onchange="handlePortfolioUpload(event)">
+                <div class="portfolio-ceremony-sections">
+                    <!-- Griha Pravesh -->
+                    <div class="portfolio-section">
+                        <div class="portfolio-section-header">
+                            <h4>🏠 Griha Pravesh <span class="portfolio-count">(4 photos)</span></h4>
+                            <button class="btn btn-ghost btn-sm" onclick="triggerPortfolioUpload()">+ Add More</button>
+                        </div>
+                        <div class="portfolio-grid">
+                            <div class="portfolio-item" style="background: linear-gradient(135deg, #f5e6d3, #ead5bc); display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">🏠</div>
+                            <div class="portfolio-item" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">🪔</div>
+                            <div class="portfolio-item" style="background: linear-gradient(135deg, #e8f5e9, #c8e6c9); display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">🥥</div>
+                            <div class="portfolio-item" style="background: linear-gradient(135deg, #fce4ec, #f8bbd0); display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">🙏</div>
+                        </div>
+                    </div>
+                    <!-- Vivah -->
+                    <div class="portfolio-section">
+                        <div class="portfolio-section-header">
+                            <h4>💒 Vivah <span class="portfolio-count">(6 photos)</span></h4>
+                            <button class="btn btn-ghost btn-sm" onclick="triggerPortfolioUpload()">+ Add More</button>
+                        </div>
+                        <div class="portfolio-grid">
+                            <div class="portfolio-item" style="background: linear-gradient(135deg, #fce4ec, #e91e63); display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">💒</div>
+                            <div class="portfolio-item" style="background: linear-gradient(135deg, #fff8e1, #ffca28); display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">🔥</div>
+                            <div class="portfolio-item" style="background: linear-gradient(135deg, #e8eaf6, #7986cb); display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">💐</div>
+                            <div class="portfolio-item" style="background: linear-gradient(135deg, #f3e5f5, #ce93d8); display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">👫</div>
+                            <div class="portfolio-item" style="background: linear-gradient(135deg, #e0f7fa, #80deea); display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">🪷</div>
+                            <div class="portfolio-item" style="background: linear-gradient(135deg, #fff3e0, #ffb74d); display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">🕉️</div>
+                        </div>
+                    </div>
+                    <!-- Satyanarayan -->
+                    <div class="portfolio-section">
+                        <div class="portfolio-section-header">
+                            <h4>🙏 Satyanarayan Puja <span class="portfolio-count">(3 photos)</span></h4>
+                            <button class="btn btn-ghost btn-sm" onclick="triggerPortfolioUpload()">+ Add More</button>
+                        </div>
+                        <div class="portfolio-grid">
+                            <div class="portfolio-item" style="background: linear-gradient(135deg, #fff8e1, #f9a825); display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">🙏</div>
+                            <div class="portfolio-item" style="background: linear-gradient(135deg, #e8f5e9, #66bb6a); display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">🍌</div>
+                            <div class="portfolio-item" style="background: linear-gradient(135deg, #fce4ec, #ef9a9a); display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">🪔</div>
+                        </div>
+                    </div>
+                    <!-- Upload area for new ceremony -->
+                    <div class="portfolio-section">
+                        <div class="portfolio-upload-zone" onclick="triggerPortfolioUpload()">
+                            <div style="font-size: 2.5rem; margin-bottom: 8px;">📷</div>
+                            <h4>Add Photos for Another Ceremony</h4>
+                            <p style="color: var(--color-text-muted); font-size: 0.875rem;">Click to select photos or drag & drop</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="dash-panel" id="pandit-tab-settings">
+                <div class="profile-edit-card">
+                    <h3 class="dash-section-title">Pandit Profile Settings</h3>
+                    <div class="form-row" style="margin-top: var(--space-lg);">
+                        <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-input" id="edit-pandit-name" value="Pandit Rajesh Sharma"></div>
+                        <div class="form-group"><label class="form-label">Phone</label><input type="tel" class="form-input" value="+91 98765 43210" disabled style="opacity:0.6"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label class="form-label">City</label><input type="text" class="form-input" id="edit-pandit-city" value="Bangalore"></div>
+                        <div class="form-group"><label class="form-label">Experience (years)</label><input type="number" class="form-input" id="edit-pandit-exp" value="20"></div>
+                    </div>
+                    <div class="form-group"><label class="form-label">Bio</label><textarea class="form-input form-textarea" rows="3" id="edit-pandit-bio">Third-generation Vedic priest from Varanasi, serving families across Bangalore with traditional Vedic ceremonies.</textarea></div>
+                    <div class="form-group"><label class="form-label">Languages</label><input type="text" class="form-input" id="edit-pandit-langs" value="Hindi, Sanskrit, English, Kannada"></div>
+                    <div class="form-group"><label class="form-label">Specializations</label>
+                        <div class="checkbox-grid">
+                            <label class="checkbox-label"><input type="checkbox" checked> 🏠 Griha Pravesh</label>
+                            <label class="checkbox-label"><input type="checkbox" checked> 💒 Vivah</label>
+                            <label class="checkbox-label"><input type="checkbox" checked> 🙏 Satyanarayan</label>
+                            <label class="checkbox-label"><input type="checkbox"> 👶 Mundan</label>
+                            <label class="checkbox-label"><input type="checkbox"> ✨ Naamkaran</label>
+                            <label class="checkbox-label"><input type="checkbox"> 🐘 Ganesh Puja</label>
+                            <label class="checkbox-label"><input type="checkbox"> 🪷 Laxmi Puja</label>
+                            <label class="checkbox-label"><input type="checkbox"> 🕯️ Shradh</label>
+                        </div>
+                    </div>
+                    <div class="form-group"><label class="form-label">Bank Account (for payouts)</label><input type="text" class="form-input" value="SBIN0001234 •••• 5678"></div>
+                    <button class="btn btn-primary" onclick="showToast('Profile settings saved! ✅', 'success')" style="margin-top: var(--space-md);">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ============================================ -->
+    <!-- FOOTER -->
+    <!-- ============================================ -->
+    <footer class="footer" id="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <span class="logo-icon">🙏</span>
+                        <span class="logo-text">DivineConnect</span>
+                    </div>
+                    <p class="footer-tagline">AI-powered Muhurat finding and verified pandit booking for every sacred ceremony.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link" aria-label="Twitter">𝕏</a>
+                        <a href="#" class="social-link" aria-label="Instagram">📷</a>
+                        <a href="#" class="social-link" aria-label="YouTube">▶</a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+                    </div>
+                </div>
+                <div class="footer-links-col">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="#" onclick="navigateTo('muhurat'); return false;">Find Muhurat</a></li>
+                        <li><a href="#" onclick="navigateTo('pandits'); return false;">Browse Pandits</a></li>
+                        <li><a href="#" onclick="navigateTo('home'); setTimeout(() => document.getElementById('ceremonies-section').scrollIntoView({behavior:'smooth'}), 300); return false;">Ceremonies</a></li>
+                        <li><a href="#" onclick="navigateTo('home'); setTimeout(() => document.getElementById('how-it-works').scrollIntoView({behavior:'smooth'}), 300); return false;">How It Works</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-col">
+                    <h4>For Pandits</h4>
+                    <ul>
+                        <li><a href="#" onclick="openModal('modal-join-pandit'); return false;">Join as Pandit</a></li>
+                        <li><a href="#" onclick="showToast('Dashboard available after login', 'info'); return false;">Pandit Dashboard</a></li>
+                        <li><a href="#" onclick="showToast('Coming soon!', 'info'); return false;">Success Stories</a></li>
+                                <li><a href="#" onclick="showToast('Coming soon!', 'info'); return false;">Help Center</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#" onclick="showToast('Coming soon!', 'info'); return false;">About Us</a></li>
+                        <li><a href="#" onclick="showToast('Coming soon!', 'info'); return false;">Careers</a></li>
+                        <li><a href="#" onclick="showToast('Coming soon!', 'info'); return false;">Privacy Policy</a></li>
+                        <li><a href="#" onclick="showToast('Coming soon!', 'info'); return false;">Terms of Service</a></li>
+                        <li><a href="#" onclick="openModal('modal-login'); return false;">My Account</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Made with 🙏 in India — © 2026 DivineConnect. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================ -->
+    <!-- MODAL: LOGIN (Role Chooser → OTP flow)      -->
+    <!-- ============================================ -->
+    <div class="modal-overlay" id="modal-login">
+        <div class="modal-card modal-sm">
+            <button class="modal-close" onclick="closeModal('modal-login')">&times;</button>
+
+            <!-- STEP 0: Role Chooser -->
+            <div id="login-role-chooser">
+                <div class="modal-header">
+                    <span style="font-size: 3rem; display:block; text-align:center; margin-bottom: 8px;">🙏</span>
+                    <h2 class="modal-title">Welcome to DivineConnect</h2>
+                    <p class="modal-subtitle">How would you like to continue?</p>
+                </div>
+                <div class="modal-body">
+                    <div class="role-chooser-grid">
+                        <button class="role-chooser-card" onclick="selectLoginRole('user')">
+                            <span class="role-icon">👤</span>
+                            <strong>I'm a Devotee</strong>
+                            <span>Book pandits, find muhurats &amp; manage ceremonies</span>
+                        </button>
+                        <button class="role-chooser-card" onclick="selectLoginRole('pandit')">
+                            <span class="role-icon">🙏</span>
+                            <strong>I'm a Pandit</strong>
+                            <span>Manage bookings, upload portfolio &amp; grow your practice</span>
+                        </button>
+                    </div>
+                    <p style="text-align:center; margin-top: 20px; font-size: 0.8125rem; color: var(--color-text-muted);">New pandit? <a href="#" onclick="closeModal('modal-login'); openModal('modal-join-pandit'); return false;" style="color: var(--color-gold); font-weight: 500;">Register here →</a></p>
+                </div>
+            </div>
+
+            <!-- STEP 1: User Login -->
+            <div id="login-user-flow" style="display:none;">
+                <div class="modal-header">
+                    <button onclick="backToRoleChooser()" style="position:absolute; left:20px; top:20px; background:none; border:none; cursor:pointer; font-size:1.25rem; color:var(--color-text-muted);">←</button>
+                    <span style="font-size: 2rem; display:block; text-align:center; margin-bottom: 8px;">👤</span>
+                    <h2 class="modal-title">Login as Devotee</h2>
+                    <p class="modal-subtitle">Book pandits and save muhurats</p>
+                </div>
+                <div class="modal-tabs">
+                    <button class="modal-tab active" data-tab="phone" onclick="switchLoginTab('phone')">📱 Phone OTP</button>
+                    <button class="modal-tab" data-tab="google" onclick="switchLoginTab('google')">🔍 Google</button>
+                </div>
+                <div class="modal-body">
+                    <div class="login-tab-content active" id="login-tab-phone">
+                        <div class="form-group" id="phone-step-1">
+                            <label class="form-label">Phone Number</label>
+                            <div class="input-group">
+                                <span class="input-prefix">+91</span>
+                                <input type="tel" class="form-input" id="login-phone" placeholder="9876543210" maxlength="10">
+                            </div>
+                            <button class="btn btn-primary btn-block" onclick="sendOTP()" style="margin-top: 16px;">Send OTP</button>
+                        </div>
+                        <div class="form-group" id="phone-step-2" style="display: none;">
+                            <label class="form-label">Enter OTP sent to <span id="otp-phone-display"></span></label>
+                            <input type="text" class="form-input" id="login-otp" placeholder="● ● ● ● ● ●" maxlength="6" style="text-align: center; font-size: 1.5rem; letter-spacing: 8px;">
+                            <button class="btn btn-primary btn-block" onclick="verifyOTP()" style="margin-top: 16px;">Verify &amp; Login</button>
+                            <p style="text-align: center; margin-top: 12px; font-size: 0.8125rem; color: var(--color-text-muted);">Didn't receive? <a href="#" onclick="sendOTP(); return false;" style="color: var(--color-gold);">Resend OTP</a></p>
+                        </div>
+                    </div>
+                    <div class="login-tab-content" id="login-tab-google">
+                        <button class="btn btn-google" onclick="googleLogin()">
+                            <svg width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                            Continue with Google
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 1: Pandit Login -->
+            <div id="login-pandit-flow" style="display:none;">
+                <div class="modal-header">
+                    <button onclick="backToRoleChooser()" style="position:absolute; left:20px; top:20px; background:none; border:none; cursor:pointer; font-size:1.25rem; color:var(--color-text-muted);">←</button>
+                    <span style="font-size: 2rem; display:block; text-align:center; margin-bottom: 8px;">🙏</span>
+                    <h2 class="modal-title">Pandit Portal Login</h2>
+                    <p class="modal-subtitle">Access your bookings, earnings &amp; portfolio</p>
+                </div>
+                <div class="modal-body">
+                    <div style="background: linear-gradient(135deg, var(--color-gold-glow), var(--color-cream-dark)); border-radius: var(--radius-md); padding: 16px; margin-bottom: 20px; display: flex; gap: 12px; align-items: center;">
+                        <span style="font-size: 2rem;">📊</span>
+                        <div style="font-size: 0.8125rem;">
+                            <strong style="display:block; color: var(--color-gold-dark);">Pandit Dashboard</strong>
+                            <span style="color: var(--color-text-muted);">Upcoming ceremonies · Earnings · Portfolio</span>
+                        </div>
+                    </div>
+                    <div id="pandit-login-step-1">
+                        <div class="form-group">
+                            <label class="form-label">Registered Phone Number</label>
+                            <div class="input-group">
+                                <span class="input-prefix">+91</span>
+                                <input type="tel" class="form-input" id="pandit-login-phone" placeholder="9876543210" maxlength="10">
+                            </div>
+                            <button class="btn btn-primary btn-block" onclick="sendPanditOTP()" style="margin-top: 16px; background: linear-gradient(135deg, var(--color-maroon), var(--color-maroon-dark)); box-shadow: 0 4px 16px rgba(91,26,42,0.3);">Send OTP →</button>
+                        </div>
+                    </div>
+                    <div id="pandit-login-step-2" style="display: none;">
+                        <div class="form-group">
+                            <label class="form-label">Enter OTP sent to <span id="pandit-otp-phone-display"></span></label>
+                            <input type="text" class="form-input" id="pandit-login-otp" placeholder="● ● ● ● ● ●" maxlength="6" style="text-align: center; font-size: 1.5rem; letter-spacing: 8px;">
+                            <button class="btn btn-primary btn-block" onclick="verifyPanditOTP()" style="margin-top: 16px; background: linear-gradient(135deg, var(--color-maroon), var(--color-maroon-dark)); box-shadow: 0 4px 16px rgba(91,26,42,0.3);">Enter My Dashboard →</button>
+                        </div>
+                    </div>
+                    <p style="text-align: center; margin-top: 16px; font-size: 0.8125rem; color: var(--color-text-muted);">Not registered? <a href="#" onclick="closeModal('modal-login'); openModal('modal-join-pandit'); return false;" style="color: var(--color-gold); font-weight: 500;">Join as Pandit →</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- MODAL: JOIN AS PANDIT -->
+    <!-- ============================================ -->
+    <div class="modal-overlay" id="modal-join-pandit">
+        <div class="modal-card modal-lg">
+            <button class="modal-close" onclick="closeModal('modal-join-pandit')">&times;</button>
+            <div class="modal-header">
+                <h2 class="modal-title">Join as a Pandit</h2>
+                <p class="modal-subtitle">Grow your practice with DivineConnect — reach thousands of families</p>
+            </div>
+            <div class="join-progress">
+                <div class="join-step active" data-step="1">1. Personal</div>
+                <div class="join-step" data-step="2">2. Experience</div>
+                <div class="join-step" data-step="3">3. Submit</div>
+            </div>
+            <div class="modal-body">
+                <!-- Step 1 -->
+                <div class="join-panel active" id="join-step-1">
+                    <div class="form-row"><div class="form-group"><label class="form-label">Full Name *</label><input type="text" class="form-input" id="join-name" placeholder="Pandit Rajesh Sharma"></div><div class="form-group"><label class="form-label">Phone *</label><input type="tel" class="form-input" id="join-phone" placeholder="+91 9876543210"></div></div>
+                    <div class="form-row"><div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="join-email" placeholder="pandit@email.com"></div><div class="form-group"><label class="form-label">City *</label><input type="text" class="form-input" id="join-city" placeholder="Bangalore"></div></div>
+                    <div class="wizard-nav"><div></div><button class="btn btn-primary" onclick="joinNext()">Next →</button></div>
+                </div>
+                <!-- Step 2 -->
+                <div class="join-panel" id="join-step-2">
+                    <div class="form-row"><div class="form-group"><label class="form-label">Years of Experience *</label><input type="number" class="form-input" id="join-experience" placeholder="15" min="1"></div><div class="form-group"><label class="form-label">Languages *</label><input type="text" class="form-input" id="join-languages" placeholder="Hindi, Sanskrit, English"></div></div>
+                    <div class="form-group"><label class="form-label">Specializations *</label><div class="checkbox-grid" id="join-specializations"><label class="checkbox-label"><input type="checkbox" value="Griha Pravesh"> 🏠 Griha Pravesh</label><label class="checkbox-label"><input type="checkbox" value="Vivah"> 💒 Vivah</label><label class="checkbox-label"><input type="checkbox" value="Satyanarayan"> 🙏 Satyanarayan</label><label class="checkbox-label"><input type="checkbox" value="Mundan"> 👶 Mundan</label><label class="checkbox-label"><input type="checkbox" value="Naamkaran"> ✨ Naamkaran</label><label class="checkbox-label"><input type="checkbox" value="Ganesh Puja"> 🐘 Ganesh Puja</label><label class="checkbox-label"><input type="checkbox" value="Laxmi Puja"> 🪷 Laxmi Puja</label><label class="checkbox-label"><input type="checkbox" value="Shradh"> 🕯️ Shradh</label></div></div>
+                    <div class="form-group"><label class="form-label">Brief Bio</label><textarea class="form-input form-textarea" id="join-bio" rows="3" placeholder="Tell families about your experience and approach..."></textarea></div>
+                    <div class="wizard-nav"><button class="btn btn-ghost" onclick="joinBack()">← Back</button><button class="btn btn-primary" onclick="joinNext()">Next →</button></div>
+                </div>
+                <!-- Step 3 -->
+                <div class="join-panel" id="join-step-3">
+                    <div class="form-group"><label class="form-label">Upload Certification (PDF/Image)</label><div class="file-upload-area" id="cert-upload"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><p>Click to upload or drag & drop</p><span class="file-upload-hint">PDF, JPG, PNG up to 5MB</span></div></div>
+                    <div class="form-group"><label class="form-label">Bank Account (for payouts)</label><input type="text" class="form-input" id="join-bank" placeholder="IFSC + Account Number"></div>
+                    <div class="form-group"><label class="checkbox-label"><input type="checkbox" id="join-terms"> I agree to DivineConnect's <a href="#" style="color: var(--color-gold);">Terms of Service</a> and <a href="#" style="color: var(--color-gold);">Pandit Guidelines</a></label></div>
+                    <div class="wizard-nav"><button class="btn btn-ghost" onclick="joinBack()">← Back</button><button class="btn btn-primary btn-lg" onclick="submitJoinPandit()">🙏 Submit Application</button></div>
+                </div>
+                <!-- Success -->
+                <div class="join-panel" id="join-success" style="text-align: center; padding: 48px 0;">
+                    <div style="font-size: 4rem; margin-bottom: 16px;">✅</div>
+                    <h3 class="wizard-panel-title">Application Submitted!</h3>
+                    <p style="color: var(--color-text-secondary); max-width: 400px; margin: 0 auto 24px;">Thank you for joining DivineConnect. Our team will review your application within 24-48 hours. You'll receive an SMS notification once verified.</p>
+                    <button class="btn btn-primary" onclick="closeModal('modal-join-pandit')">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- MODAL: BOOKING -->
+    <!-- ============================================ -->
+    <div class="modal-overlay" id="modal-booking">
+        <div class="modal-card modal-md">
+            <button class="modal-close" onclick="closeModal('modal-booking')">&times;</button>
+            <div class="modal-header">
+                <h2 class="modal-title">Complete Your Booking</h2>
+                <p class="modal-subtitle">Pandit Rajesh Sharma</p>
+            </div>
+            <div class="modal-body" id="booking-form-body">
+                <div class="form-group"><label class="form-label">Ceremony</label><select class="form-select" id="modal-booking-ceremony" onchange="updateBookingPrice()"><option value="griha-pravesh">🏠 Griha Pravesh — ₹3,500</option><option value="vivah">💒 Vivah — ₹11,000</option><option value="satyanarayan">🙏 Satyanarayan — ₹2,500</option><option value="mundan">👶 Mundan — ₹2,100</option><option value="naamkaran">✨ Naamkaran — ₹1,800</option><option value="ganesh-puja">🐘 Ganesh Puja — ₹2,000</option></select></div>
+                <div class="form-row"><div class="form-group"><label class="form-label">Date</label><input type="date" class="form-input" id="modal-booking-date" value="2026-06-15"></div><div class="form-group"><label class="form-label">Preferred Time</label><select class="form-select" id="modal-booking-time"><option>Morning (6-9 AM)</option><option selected>Morning (9 AM-12 PM)</option><option>Afternoon (12-3 PM)</option><option>Afternoon (3-6 PM)</option><option>Evening (6-8 PM)</option></select></div></div>
+                <div class="form-group"><label class="form-label">Venue / Address</label><input type="text" class="form-input" id="modal-booking-address" placeholder="Your home address or venue name"></div>
+                <div class="form-group"><label class="form-label">Special Requests</label><textarea class="form-input form-textarea" id="modal-booking-requests" rows="2" placeholder="Any specific requirements or customs..."></textarea></div>
+                <div class="booking-price-breakdown" id="booking-price-breakdown">
+                    <div class="price-row"><span>Ceremony Fee</span><span id="price-ceremony">₹3,500</span></div>
+                    <div class="price-row"><span>Platform Fee</span><span>₹99</span></div>
+                    <div class="price-row price-total"><span>Total</span><span id="price-total">₹3,599</span></div>
+                </div>
+                <div class="booking-trust-badges">
+                    <span>🔒 Secure Payment</span>
+                    <span>💰 Money-Back Guarantee</span>
+                    <span>✅ Verified Pandit</span>
+                </div>
+                <button class="btn btn-primary btn-block btn-lg" onclick="confirmBooking()" id="confirm-booking-btn">Confirm & Pay ₹3,599</button>
+            </div>
+            <!-- Booking Success State -->
+            <div class="modal-body" id="booking-success-body" style="display: none; text-align: center; padding: 48px 24px;">
+                <div style="font-size: 4rem; margin-bottom: 16px;">🎉</div>
+                <h3 class="wizard-panel-title">Booking Confirmed!</h3>
+                <div class="booking-confirmation-card">
+                    <p class="booking-number" id="booking-number-display">DC-2026-48291</p>
+                    <p id="booking-summary-text">Griha Pravesh with Pandit Rajesh Sharma</p>
+                    <p id="booking-date-text" style="color: var(--color-text-muted);">June 15, 2026 • Morning (9 AM-12 PM)</p>
+                </div>
+                <p style="color: var(--color-text-secondary); margin: 16px 0;">Confirmation sent via SMS and email. Pandit ji will contact you within 30 minutes.</p>
+                <button class="btn btn-primary" onclick="closeModal('modal-booking')">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
