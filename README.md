@@ -114,7 +114,7 @@ python -m http.server 8080
 # Right-click index.html → Open with Live Server
 ```
 
-Then open **http://localhost:8080**
+Then open **https://divineconnect.netlify.app/**
 
 ---
 
